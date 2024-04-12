@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">SUrf_lesson_4</string>
+    <string name="start_registration">Start registration</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="close">Close</string>
+    <string name="enter_name">Enter Your name</string>
+    <string name="enter_surname">Enter Your surname</string>
+    <string name="enter_age">Enter Your age</string>
+    <string name="edit_text_field_is_empty">Edit text field is empty</string>
+    <string name="finish_registration">Finish registration</string>
+    <string name="affinity" translatable="false">affinity</string>
+</resources>
