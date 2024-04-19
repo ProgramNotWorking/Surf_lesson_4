@@ -1,11 +1,13 @@
 package com.example.surf_lesson_4
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.surf_lesson_4.constants.InfoConstants
@@ -33,28 +35,38 @@ class SurnameFlowActivity : AppCompatActivity() {
         binding.apply {
 
             nextButton.setOnClickListener {
-                val intent = onNext(
-                    this@SurnameFlowActivity,
-                    InfoConstants.AGE,
-                    editSurnamePlainTextView,
-                    Info.Surname
-                )
-                intent?.let {
-                    it.putExtra(
-                        InfoConstants.NAME, it.getStringExtra(IntentConstants.NAME_FIELD)
+//                val intent = onNext(
+//                    this@SurnameFlowActivity,
+//                    InfoConstants.AGE,
+//                    editSurnamePlainTextView,
+//                    Info.Surname
+//                )
+//                intent?.let {
+//                    it.putExtra(
+//                        InfoConstants.NAME, it.getStringExtra(IntentConstants.NAME_FIELD)
+//                    )
+//                    startActivity(it)
+//                }
+
+                val name = intent.getStringExtra(IntentConstants.NAME_FIELD)
+                val newIntent = Intent(this@SurnameFlowActivity, AgeFlowActivity::class.java)
+                newIntent.putExtras(
+                    bundleOf(
+                        IntentConstants.NAME_FIELD to name,
+                        IntentConstants.SURNAME_FIELD to editSurnamePlainTextView.text.toString()
                     )
-                    startActivity(it)
-                }
+                )
+                startActivity(newIntent)
             }
 
             backButton.setOnClickListener {
                 setResult(RESULT_CANCELED)
-                finish()
+                startActivity(Intent(this@SurnameFlowActivity, NameFlowActivity::class.java))
             }
 
             closeButton.setOnClickListener {
                 setResult(RESULT_CANCELED)
-                finishAffinity()
+                startActivity(Intent(this@SurnameFlowActivity, MainActivity::class.java))
             }
 
         }

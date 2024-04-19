@@ -9,5 +9,4 @@
     <string name="enter_age">Enter Your age</string>
     <string name="edit_text_field_is_empty">Edit text field is empty</string>
     <string name="finish_registration">Finish registration</string>
-    <string name="affinity" translatable="false">affinity</string>
 </resources>

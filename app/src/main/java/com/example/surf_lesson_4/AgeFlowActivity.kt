@@ -34,24 +34,47 @@ class AgeFlowActivity : AppCompatActivity() {
         binding.apply {
 
             finishRegistrationButton.setOnClickListener {
-                if (editAgePlainTextView.text.toString().isEmpty()) {
-                    Toast.makeText(
-                        this@AgeFlowActivity, R.string.edit_text_field_is_empty, Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    var data: Bundle? = null
-                    intent.extras?.let {
-                        data = bundleOf(
-                            InfoConstants.NAME to it.getString(IntentConstants.NAME_FIELD),
-                            InfoConstants.SURNAME to it.getString(IntentConstants.SURNAME_FIELD),
-                            InfoConstants.AGE to editAgePlainTextView.text.toString()
-                        )
-                    }
-                    val newIntent = Intent(this@AgeFlowActivity, MainActivity::class.java)
-                    data?.let { newIntent.putExtras(it) }
-                    setResult(RESULT_OK, newIntent)
-                    finish()
+                var name: String = ""
+                var surname: String = ""
+                intent.extras?.let {
+                    name = it.getString(IntentConstants.NAME_FIELD) ?: "NOTHING"
+                    surname = it.getString(IntentConstants.SURNAME_FIELD) ?: "NOTHING"
                 }
+                val newIntent = Intent(this@AgeFlowActivity, MainActivity::class.java)
+                newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                newIntent.putExtras(
+                    bundleOf(
+                        IntentConstants.NAME_FIELD to name,
+                        IntentConstants.SURNAME_FIELD to surname,
+                        IntentConstants.AGE_FIELD to editAgePlainTextView.text.toString()
+                    )
+                )
+                setResult(RESULT_OK)
+                startActivity(newIntent)
+
+
+//                if (editAgePlainTextView.text.toString().isEmpty()) {
+//                    Toast.makeText(
+//                        this@AgeFlowActivity, R.string.edit_text_field_is_empty, Toast.LENGTH_SHORT
+//                    ).show()
+//                } else {
+//                    var data: Bundle? = null
+//                    intent.extras?.let {
+//                        data = bundleOf(
+//                            InfoConstants.NAME to it.getString(IntentConstants.NAME_FIELD),
+//                            InfoConstants.SURNAME to it.getString(IntentConstants.SURNAME_FIELD),
+//                            InfoConstants.AGE to editAgePlainTextView.text.toString()
+//                        )
+//                    }
+//                    val newIntent = Intent(this@AgeFlowActivity, MainActivity::class.java)
+//                    data?.let { newIntent.putExtras(it) }
+//                    setResult(RESULT_OK, newIntent)
+//                    newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                    // newIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+//                    // startActivity(newIntent)
+//                    // Flag = clear top
+//                    startActivity(newIntent)
+//                }
             }
 
         }

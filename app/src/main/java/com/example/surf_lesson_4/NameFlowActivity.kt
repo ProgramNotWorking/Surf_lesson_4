@@ -1,5 +1,6 @@
 package com.example.surf_lesson_4
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
@@ -8,11 +9,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.surf_lesson_4.constants.InfoConstants
+import com.example.surf_lesson_4.constants.IntentConstants
 import com.example.surf_lesson_4.databinding.ActivityNameFlowBinding
-import com.example.surf_lesson_4.functions.Info
 import com.example.surf_lesson_4.functions.KeyboardUtils
-import com.example.surf_lesson_4.functions.onNext
 
 class NameFlowActivity : AppCompatActivity() {
 
@@ -32,23 +31,29 @@ class NameFlowActivity : AppCompatActivity() {
         binding.apply {
 
             nextButton.setOnClickListener {
-                val intent = onNext(
-                    this@NameFlowActivity,
-                    InfoConstants.SURNAME,
-                    editNamePlainTextView,
-                    Info.Name
-                )
-                intent?.let { startActivity(it) }
+//                val intent = onNext(
+//                    this@NameFlowActivity,
+//                    InfoConstants.SURNAME,
+//                    editNamePlainTextView,
+//                    Info.Name
+//                )
+//                intent?.let {
+//                    startActivity(it)
+//                }
+
+                val newIntent = Intent(this@NameFlowActivity, SurnameFlowActivity::class.java)
+                newIntent.putExtra(IntentConstants.NAME_FIELD, editNamePlainTextView.text.toString())
+                startActivity(newIntent)
             }
 
             backButton.setOnClickListener {
                 setResult(RESULT_CANCELED)
-                finish()
+                startActivity(Intent(this@NameFlowActivity, MainActivity::class.java))
             }
 
             closeButton.setOnClickListener {
                 setResult(RESULT_CANCELED)
-                finishAffinity()
+                startActivity(Intent(this@NameFlowActivity, MainActivity::class.java))
             }
 
         }
