@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
                     startRegistrationButton.visibility = View.GONE
                     resultTextView.visibility = View.VISIBLE
-                    resultTextView.text = "${data?.getStringExtra(IntentConstants.NAME_FIELD)} " +
+                    resultTextView.text = "Welcome\n${data?.getStringExtra(IntentConstants.NAME_FIELD)} " +
                             "${data?.getStringExtra(IntentConstants.SURNAME_FIELD)}"
                 }
             }

@@ -9,5 +9,5 @@
     <string name="enter_surname">Введите вашу фамилию</string>
     <string name="enter_age">Введите ваш возраст</string>
     <string name="edit_text_field_is_empty">Поле ввода информации не заполнено</string>
-    <string name="finish_registration">Закончить регистрацию</string>
+    <string name="finish_registration">Закончить\nрегистрацию</string>
 </resources>

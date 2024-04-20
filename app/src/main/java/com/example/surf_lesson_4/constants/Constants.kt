@@ -5,9 +5,3 @@ object IntentConstants {
     const val SURNAME_FIELD = "surname_field"
     const val AGE_FIELD = "age_field"
 }
-
-object InfoConstants {
-    const val NAME = "name"
-    const val SURNAME = "surname"
-    const val AGE = "age"
-}

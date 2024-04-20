@@ -5,15 +5,14 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.surf_lesson_4.constants.IntentConstants
 import com.example.surf_lesson_4.databinding.ActivityNameFlowBinding
-import com.example.surf_lesson_4.functions.Info
 import com.example.surf_lesson_4.functions.KeyboardUtils
 
 class NameFlowActivity : AppCompatActivity() {
@@ -54,22 +53,32 @@ class NameFlowActivity : AppCompatActivity() {
                     }
                     setResult(RESULT_OK, resultIntent)
                     finish()
+                } else if (result.resultCode == RESULT_CANCELED) {
+                    val intent = Intent(this@NameFlowActivity, MainActivity::class.java)
+                    setResult(RESULT_CANCELED, intent)
+                    finish()
                 }
             }
 
             nextButton.setOnClickListener {
-                val intent = Intent(this@NameFlowActivity, SurnameFlowActivity::class.java)
-                resultLauncher.launch(intent)
+                if (editNamePlainTextView.text.toString() == "") {
+                    Toast.makeText(
+                        this@NameFlowActivity, R.string.edit_text_field_is_empty, Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val intent = Intent(this@NameFlowActivity, SurnameFlowActivity::class.java)
+                    resultLauncher.launch(intent)
+                }
             }
 
             backButton.setOnClickListener {
-                setResult(RESULT_CANCELED)
-                startActivity(Intent(this@NameFlowActivity, MainActivity::class.java))
+                finish()
             }
 
             closeButton.setOnClickListener {
-                setResult(RESULT_CANCELED)
-                startActivity(Intent(this@NameFlowActivity, MainActivity::class.java))
+                val intent = Intent(this@NameFlowActivity, MainActivity::class.java)
+                setResult(RESULT_CANCELED, intent)
+                finish()
             }
 
         }

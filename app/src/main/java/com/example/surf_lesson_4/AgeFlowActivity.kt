@@ -8,10 +8,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.surf_lesson_4.constants.InfoConstants
 import com.example.surf_lesson_4.constants.IntentConstants
 import com.example.surf_lesson_4.databinding.ActivityAgeFlowBinding
 import com.example.surf_lesson_4.functions.KeyboardUtils
@@ -34,11 +32,29 @@ class AgeFlowActivity : AppCompatActivity() {
         binding.apply {
 
             finishRegistrationButton.setOnClickListener {
-                val resultIntent = Intent(this@AgeFlowActivity, SurnameFlowActivity::class.java)
-                resultIntent.putExtra(
-                    IntentConstants.AGE_FIELD, editAgePlainTextView.text.toString()
-                )
-                setResult(RESULT_OK, resultIntent)
+                if (editAgePlainTextView.text.toString() == "") {
+                    Toast.makeText(
+                        this@AgeFlowActivity, R.string.edit_text_field_is_empty, Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val resultIntent = Intent(this@AgeFlowActivity, SurnameFlowActivity::class.java)
+                    resultIntent.putExtra(
+                        IntentConstants.AGE_FIELD, editAgePlainTextView.text.toString()
+                    )
+                    setResult(RESULT_OK, resultIntent)
+                    finish()
+                }
+            }
+
+            backButton.setOnClickListener {
+                val intent = Intent(this@AgeFlowActivity, SurnameFlowActivity::class.java)
+                setResult(RESULT_FIRST_USER, intent)
+                finish()
+            }
+
+            closeButton.setOnClickListener {
+                val intent = Intent(this@AgeFlowActivity, SurnameFlowActivity::class.java)
+                setResult(RESULT_CANCELED, intent)
                 finish()
             }
 
