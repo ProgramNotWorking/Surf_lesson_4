@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
@@ -34,29 +35,30 @@ class SurnameFlowActivity : AppCompatActivity() {
 
         binding.apply {
 
-            nextButton.setOnClickListener {
-//                val intent = onNext(
-//                    this@SurnameFlowActivity,
-//                    InfoConstants.AGE,
-//                    editSurnamePlainTextView,
-//                    Info.Surname
-//                )
-//                intent?.let {
-//                    it.putExtra(
-//                        InfoConstants.NAME, it.getStringExtra(IntentConstants.NAME_FIELD)
-//                    )
-//                    startActivity(it)
-//                }
+            val resultLauncher = registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    val data = result.data
+                    val resultIntent = Intent(this@SurnameFlowActivity, NameFlowActivity::class.java)
+                    data?.extras?.let {
+                        resultIntent.apply {
+                            this.putExtra(
+                                IntentConstants.SURNAME_FIELD, editSurnamePlainTextView.text.toString()
+                            )
+                            this.putExtra(
+                                IntentConstants.AGE_FIELD, it.getString(IntentConstants.AGE_FIELD)
+                            )
+                        }
+                    }
+                    setResult(RESULT_OK, resultIntent)
+                    finish()
+                }
+            }
 
-                val name = intent.getStringExtra(IntentConstants.NAME_FIELD)
-                val newIntent = Intent(this@SurnameFlowActivity, AgeFlowActivity::class.java)
-                newIntent.putExtras(
-                    bundleOf(
-                        IntentConstants.NAME_FIELD to name,
-                        IntentConstants.SURNAME_FIELD to editSurnamePlainTextView.text.toString()
-                    )
-                )
-                startActivity(newIntent)
+            nextButton.setOnClickListener {
+                val intent = Intent(this@SurnameFlowActivity, AgeFlowActivity::class.java)
+                resultLauncher.launch(intent)
             }
 
             backButton.setOnClickListener {
